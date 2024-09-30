@@ -3,16 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Affitto Appartamento - Milano</title>
+    <title>Affitto Appartamento - Via Populonia 8, Milano</title>
     <!-- Import Materialize CSS -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <style>
         body {
             font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f8f9fa;
+            background-color: #f5f5f5;
             color: #333;
         }
         .header-bar {
@@ -20,53 +21,131 @@
             color: white;
             padding: 20px;
             text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         .header-bar h1 {
             margin: 0;
             font-size: 2.5em;
+            letter-spacing: 1px;
         }
-        .container {
-            text-align: center;
-            padding: 40px 20px;
+        .main-content {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            padding: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
-        .title {
-            font-size: 2.5em;
-            font-weight: 600;
-            color: #333;
+        .carousel-container {
+            flex: 1;
+            margin-top: 40px;
+            display: none; /* Nascosto di default */
         }
-        .subtitle {
-            font-size: 1.5em;
-            margin: 10px 0;
+        .carousel-item img {
+            width: 100%;
+            height: 500px;
+            object-fit: contain; /* Adatta l'immagine al contenitore senza tagliarla */
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            width: 100%;
+        }
+        .card {
+            flex: 1;
+            background-color: #fff;
+            margin: 10px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 48%;
+            box-sizing: border-box;
+        }
+        .card h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
             color: #007BFF;
+            border-bottom: 2px solid #007BFF;
+            padding-bottom: 10px;
         }
-        .details {
+        .card p {
             font-size: 1.2em;
-            margin-top: 30px;
-            color: #444;
+            line-height: 1.6em;
+            margin-bottom: 20px;
+            color: #555;
         }
-        .services {
-            margin: 20px 0;
-            list-style-type: none;
+        .services-list {
+            list-style: none;
             padding: 0;
-            color: #444;
+            margin-bottom: 30px;
         }
-        .services li {
-            margin: 10px 0;
+        .services-list li {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
         }
-        .cta {
-            margin-top: 30px;
+        .services-list li i {
+            margin-right: 10px;
+            color: #4CAF50;
         }
-        .cta button {
+        .social-buttons {
+            margin-top: 40px;
+        }
+        .social-buttons a {
+            display: inline-block;
+            margin-right: 20px;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 1.2em;
+            display: flex;
+            align-items: center;
+        }
+        .social-buttons a.whatsapp {
+            background-color: #25D366;
+        }
+        .social-buttons a.gmail {
+            background-color: #DB4437;
+        }
+        .social-buttons a i {
+            margin-right: 10px;
+        }
+        .social-buttons a:hover {
+            opacity: 0.9;
+        }
+        .flag {
+            font-size: 1.5em;
+            margin-right: 10px;
+        }
+        @media (max-width: 768px) {
+            .card {
+                max-width: 100%;
+                margin-bottom: 20px;
+            }
+        }
+        .show-photos-btn {
             background-color: #007BFF;
             color: white;
+            padding: 10px 20px;
             border: none;
-            padding: 15px 30px;
-            font-size: 1em;
-            cursor: pointer;
             border-radius: 5px;
-            transition: background-color 0.3s;
+            cursor: pointer;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
         }
-        .cta button:hover {
+        .show-photos-btn i {
+            margin-right: 10px;
+        }
+        .show-photos-btn:hover {
             background-color: #0056b3;
         }
     </style>
@@ -77,46 +156,70 @@
         <h1>Affitto Appartamento a Milano</h1>
     </div>
 
-    <div class="container">
-        <div class="title">Affitta il tuo sogno!</div>
-        <div class="subtitle">Appartamento lussuoso nel centro di Milano</div>
-        <div class="details">
-            Prezzo: €1200 al mese <br>
-            Dimensione: 100 m² <br>
-            2 camere, 1 bagno, cucina moderna
-        </div>
-        <ul class="services">
-            <li>Servizi inclusi:</li>
-            <li>- WiFi ad alta velocità</li>
-            <li>- Parcheggio privato</li>
-            <li>- Arredamento completo</li>
-            <li>- Servizio di pulizia settimanale</li>
-        </ul>
+    <div class="main-content">
+        <!-- Sezione card per Italiano e Inglese -->
+        <div class="card-container">
+            <!-- 🇮🇹 Card in Italiano -->
+            <div class="card">
+                <h2><span class="flag">🇮🇹</span> Descrizione in Italiano</h2>
+                <p>
+                    <i class="material-icons">euro</i> Prezzo mensile: €1200 <br>
+                    <i class="material-icons">schedule</i> Contratto fisso: 12 mesi <br>
+                    <i class="material-icons">square_foot</i> Dimensione: 45 m² (compreso il soppalco) <br>
+                    <i class="material-icons">report_problem</i> Spese escluse: WiFi, spazzatura e luce
+                </p>
+                <ul class="services-list">
+                    <li><i class="material-icons">assignment</i> Requisiti: busta paga o dichiarazione dei redditi (genitori inclusi)</li>
+                    <li><i class="material-icons">local_offer</i> Arredamento non completo: esclusi microonde, macchinetta del caffè, cestini, mobiletto TV, comodino del soppalco</li>
+                </ul>
+                <p>L'appartamento è per al massimo 2 persone.</p>
+                <p>Per richiedere l'affitto, invia i documenti richiesti all'email indicati.</p>
+                <br>bookpopulonia@gmail.com</br>
+            </div>
 
-        <!-- Carosello di immagini -->
-        <div class="carousel carousel-slider center">
-            <div class="carousel-item" href="#one!">
-                <img src="https://i.ibb.co/KWLVpSM/Whats-App-Image-2024-09-30-at-10-51-56.jpg" alt="Foto 1">
-            </div>
-            <div class="carousel-item" href="#two!">
-                <img src="https://i.ibb.co/jMxvL7V/Whats-App-Image-2024-09-30-at-10-51-57-1.jpg" alt="Foto 2">
-            </div>
-            <div class="carousel-item" href="#three!">
-                <img src="https://i.ibb.co/Ln4Bm3P/Whats-App-Image-2024-09-30-at-10-51-57-2.jpg" alt="Foto 3">
-            </div>
-            <div class="carousel-item" href="#four!">
-                <img src="https://i.ibb.co/jRj43Z5/Whats-App-Image-2024-09-30-at-10-51-57-3.jpg" alt="Foto 4">
-            </div>
-            <div class="carousel-item" href="#five!">
-                <img src="https://i.ibb.co/7XVs4j3/Whats-App-Image-2024-09-30-at-10-51-57-4.jpg" alt="Foto 5">
-            </div>
-            <div class="carousel-item" href="#six!">
-                <img src="https://i.ibb.co/D7zPBBy/Whats-App-Image-2024-09-30-at-10-51-57.jpg" alt="Foto 6">
+            <!-- 🇬🇧 Card in Inglese -->
+            <div class="card">
+                <h2><span class="flag">🇬🇧</span> Description in English</h2>
+                <p>
+                    <i class="material-icons">euro</i> Monthly rent: €1200 <br>
+                    <i class="material-icons">schedule</i> Fixed-term contract: 12 months <br>
+                    <i class="material-icons">square_foot</i> Size: 45 m² (including mezzanine) <br>
+                    <i class="material-icons">report_problem</i> Additional costs: WiFi, garbage, and electricity
+                </p>
+                <ul class="services-list">
+                    <li><i class="material-icons">assignment</i> Requirements: payslip or tax return (parents' documents are accepted)</li>
+                    <li><i class="material-icons">local_offer</i> Not fully furnished: excludes microwave, coffee machine, trash bins, TV stand, mezzanine nightstand</li>
+                </ul>
+                <p>The apartment is for a maximum of 2 people.</p>
+                <p>To apply for the rental, please send the required documents to the provided email address.</p>
+                <br>bookpopulonia@gmail.com</br>
             </div>
         </div>
 
-        <div class="cta">
-            <button>Richiedi maggiori informazioni</button>
+        <!-- Pulsante per mostrare il carosello -->
+        <button class="show-photos-btn" id="showPhotosBtn">
+            <i class="material-icons">photo</i> Mostra Foto
+        </button>
+
+        <!-- Sezione carosello (nascosto di default) -->
+        <div class="carousel-container" id="photoCarousel">
+            <div class="carousel carousel-slider">
+                <div class="carousel-item">
+                    <img src="https://i.ibb.co/KWLVpSM/Whats-App-Image-2024-09-30-at-10-51-56.jpg" alt="Foto 1">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://i.ibb.co/jMxvL7V/Whats-App-Image-2024-09-30-at-10-51-57-1.jpg" alt="Foto 2">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://i.ibb.co/Ln4Bm3P/Whats-App-Image-2024-09-30-at-10-51-57-2.jpg" alt="Foto 3">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://i.ibb.co/jRj43Z5/Whats-App-Image-2024-09-30-at-10-51-57-3.jpg" alt="Foto 4">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://i.ibb.co/7XVs4j3/Whats-App-Image-2024-09-30-at-10-51-57-4.jpg" alt="Foto 5">
+                </div>
+            </div>
         </div>
     </div>
 
@@ -124,18 +227,27 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            var elems = document.querySelectorAll('.carousel');
-            var instances = M.Carousel.init(elems, {
-                fullWidth: true,
-                indicators: true,
-                duration: 200,
-                autoplay: true
-            });
+            var carouselElems = document.querySelectorAll('.carousel');
             
-            // Auto play
-            setInterval(function() {
-                instances[0].next();
-            }, 3000); // Slideshow interval
+            // Funzione per reinizializzare il carosello ogni volta che viene mostrato
+            var instances = M.Carousel.init(carouselElems, {
+                fullWidth: true,
+                indicators: true
+            });
+
+            // Mostra/nascondi carosello e reinizializza
+            document.getElementById('showPhotosBtn').addEventListener('click', function() {
+                var carousel = document.getElementById('photoCarousel');
+                if (carousel.style.display === "none" || carousel.style.display === "") {
+                    carousel.style.display = "block"; // Mostra il carosello
+                    M.Carousel.init(carouselElems, {
+                        fullWidth: true,
+                        indicators: true
+                    }); // Reinizializza il carosello
+                } else {
+                    carousel.style.display = "none"; // Nasconde il carosello
+                }
+            });
         });
     </script>
 
