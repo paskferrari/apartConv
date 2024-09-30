@@ -3,15 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Affitto Appartamento</title>
+    <title>Affitto Appartamento - Milano</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f0f0f0;
+            background-color: #e0e0e0;
             color: #333;
+        }
+        .header-bar {
+            background-color: #007BFF;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .header-bar h1 {
+            margin: 0;
+            font-size: 2.5em;
         }
         .container {
             display: flex;
@@ -19,32 +29,46 @@
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            background-image: url('your-apartment-image.jpg');
-            background-size: cover;
-            background-position: center;
-            color: white;
+            background-color: #f8f9fa;
             text-align: center;
-            padding: 0 20px;
+            padding: 40px 20px;
         }
-        .header {
+        .title {
             font-size: 2.5em;
             font-weight: 600;
+            color: #333;
         }
-        .sub-header {
+        .subtitle {
             font-size: 1.5em;
             margin: 10px 0;
+            color: #007BFF;
         }
         .details {
             font-size: 1.2em;
             margin-top: 30px;
+            color: #444;
         }
         .services {
             margin: 20px 0;
             list-style-type: none;
             padding: 0;
+            color: #444;
         }
         .services li {
             margin: 10px 0;
+        }
+        .photos {
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+        }
+        .photos img {
+            width: 200px;
+            height: 150px;
+            margin: 10px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 2px solid #007BFF;
         }
         .cta {
             margin-top: 30px;
@@ -65,9 +89,13 @@
     </style>
 </head>
 <body>
+    <div class="header-bar">
+        <h1>Affitto Appartamento a Milano</h1>
+    </div>
+
     <div class="container">
-        <div class="header">Affitta il tuo sogno!</div>
-        <div class="sub-header">Appartamento lussuoso nel centro di Milano</div>
+        <div class="title">Affitta il tuo sogno!</div>
+        <div class="subtitle">Appartamento lussuoso nel centro di Milano</div>
         <div class="details">
             Prezzo: €1200 al mese <br>
             Dimensione: 100 m² <br>
@@ -80,6 +108,13 @@
             <li>- Arredamento completo</li>
             <li>- Servizio di pulizia settimanale</li>
         </ul>
+
+        <div class="photos">
+            <img src="camera1.jpg" alt="Camera da letto">
+            <img src="camera2.jpg" alt="Cucina moderna">
+            <img src="camera3.jpg" alt="Bagno spazioso">
+        </div>
+
         <div class="cta">
             <button>Richiedi maggiori informazioni</button>
         </div>
