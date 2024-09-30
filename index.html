@@ -141,6 +141,7 @@
             margin-bottom: 20px;
             display: flex;
             align-items: center;
+            text-decoration: none; /* Assicura che non ci siano decorazioni */
         }
         .show-photos-btn i {
             margin-right: 10px;
@@ -172,9 +173,7 @@
                     <li><i class="material-icons">assignment</i> Requisiti: busta paga o dichiarazione dei redditi (genitori inclusi)</li>
                     <li><i class="material-icons">local_offer</i> Arredamento non completo: esclusi microonde, macchinetta del caffè, cestini, mobiletto TV, comodino del soppalco</li>
                 </ul>
-                <p>L'appartamento è per al massimo 2 persone.</p>
-                <p>Per richiedere l'affitto, invia i documenti richiesti all'email indicati.</p>
-                <br>bookpopulonia@gmail.com</br>
+                <p>Per richiedere l'affitto, invia i documenti richiesti al numero o all'email indicati.</p>
             </div>
 
             <!-- 🇬🇧 Card in Inglese -->
@@ -190,16 +189,14 @@
                     <li><i class="material-icons">assignment</i> Requirements: payslip or tax return (parents' documents are accepted)</li>
                     <li><i class="material-icons">local_offer</i> Not fully furnished: excludes microwave, coffee machine, trash bins, TV stand, mezzanine nightstand</li>
                 </ul>
-                <p>The apartment is for a maximum of 2 people.</p>
-                <p>To apply for the rental, please send the required documents to the provided email address.</p>
-                <br>bookpopulonia@gmail.com</br>
+                <p>To apply for the rental, please send the required documents to the provided phone number or email address.</p>
             </div>
         </div>
 
-        <!-- Pulsante per mostrare il carosello -->
-        <button class="show-photos-btn" id="showPhotosBtn">
-            <i class="material-icons">photo</i> Mostra Foto/Show Photo
-        </button>
+        <!-- Pulsante per aprire il link in una nuova scheda -->
+        <a class="show-photos-btn" href="https://drive.google.com/drive/folders/13s32FcpzlZh0nihK__4kxoWDFLTHII9f?usp=sharing" target="_blank">
+            <i class="material-icons">photo</i> Mostra Foto
+        </a>
 
         <!-- Sezione carosello (nascosto di default) -->
         <div class="carousel-container" id="photoCarousel">
@@ -225,31 +222,6 @@
 
     <!-- Import Materialize JS and jQuery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var carouselElems = document.querySelectorAll('.carousel');
-            
-            // Funzione per reinizializzare il carosello ogni volta che viene mostrato
-            var instances = M.Carousel.init(carouselElems, {
-                fullWidth: true,
-                indicators: true
-            });
-
-            // Mostra/nascondi carosello e reinizializza
-            document.getElementById('showPhotosBtn').addEventListener('click', function() {
-                var carousel = document.getElementById('photoCarousel');
-                if (carousel.style.display === "none" || carousel.style.display === "") {
-                    carousel.style.display = "block"; // Mostra il carosello
-                    M.Carousel.init(carouselElems, {
-                        fullWidth: true,
-                        indicators: true
-                    }); // Reinizializza il carosello
-                } else {
-                    carousel.style.display = "none"; // Nasconde il carosello
-                }
-            });
-        });
-    </script>
 
 </body>
 </html>
