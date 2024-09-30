@@ -4,13 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Affitto Appartamento - Milano</title>
+    <!-- Import Materialize CSS -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <style>
         body {
             font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #e0e0e0;
+            background-color: #f8f9fa;
             color: #333;
         }
         .header-bar {
@@ -24,12 +26,6 @@
             font-size: 2.5em;
         }
         .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            background-color: #f8f9fa;
             text-align: center;
             padding: 40px 20px;
         }
@@ -57,19 +53,6 @@
         .services li {
             margin: 10px 0;
         }
-        .photos {
-            display: flex;
-            justify-content: center;
-            margin-top: 40px;
-        }
-        .photos img {
-            width: 200px;
-            height: 150px;
-            margin: 10px;
-            object-fit: cover;
-            border-radius: 10px;
-            border: 2px solid #007BFF;
-        }
         .cta {
             margin-top: 30px;
         }
@@ -89,6 +72,7 @@
     </style>
 </head>
 <body>
+
     <div class="header-bar">
         <h1>Affitto Appartamento a Milano</h1>
     </div>
@@ -109,15 +93,51 @@
             <li>- Servizio di pulizia settimanale</li>
         </ul>
 
-        <div class="photos">
-            <img src="camera1.jpg" alt="Camera da letto">
-            <img src="camera2.jpg" alt="Cucina moderna">
-            <img src="camera3.jpg" alt="Bagno spazioso">
+        <!-- Carosello di immagini -->
+        <div class="carousel carousel-slider center">
+            <div class="carousel-item" href="#one!">
+                <img src="https://i.ibb.co/KWLVpSM/Whats-App-Image-2024-09-30-at-10-51-56.jpg" alt="Foto 1">
+            </div>
+            <div class="carousel-item" href="#two!">
+                <img src="https://i.ibb.co/jMxvL7V/Whats-App-Image-2024-09-30-at-10-51-57-1.jpg" alt="Foto 2">
+            </div>
+            <div class="carousel-item" href="#three!">
+                <img src="https://i.ibb.co/Ln4Bm3P/Whats-App-Image-2024-09-30-at-10-51-57-2.jpg" alt="Foto 3">
+            </div>
+            <div class="carousel-item" href="#four!">
+                <img src="https://i.ibb.co/jRj43Z5/Whats-App-Image-2024-09-30-at-10-51-57-3.jpg" alt="Foto 4">
+            </div>
+            <div class="carousel-item" href="#five!">
+                <img src="https://i.ibb.co/7XVs4j3/Whats-App-Image-2024-09-30-at-10-51-57-4.jpg" alt="Foto 5">
+            </div>
+            <div class="carousel-item" href="#six!">
+                <img src="https://i.ibb.co/D7zPBBy/Whats-App-Image-2024-09-30-at-10-51-57.jpg" alt="Foto 6">
+            </div>
         </div>
 
         <div class="cta">
             <button>Richiedi maggiori informazioni</button>
         </div>
     </div>
+
+    <!-- Import Materialize JS and jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var elems = document.querySelectorAll('.carousel');
+            var instances = M.Carousel.init(elems, {
+                fullWidth: true,
+                indicators: true,
+                duration: 200,
+                autoplay: true
+            });
+            
+            // Auto play
+            setInterval(function() {
+                instances[0].next();
+            }, 3000); // Slideshow interval
+        });
+    </script>
+
 </body>
 </html>
