@@ -3,40 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customer Journeys - ModernCRM</title>
+    <title>Simple CRM</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Segoe UI', system-ui, sans-serif;
         }
 
         :root {
-            --bg-main: #f8f9fb;
-            --bg-card: #ffffff;
-            --text-primary: #1a1a1a;
-            --text-secondary: #666666;
-            --border-color: #eaedf2;
-            --accent-blue: #2563eb;
-            --accent-red: #ef4444;
-            --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
-            --shadow-md: 0 4px 6px rgba(0,0,0,0.07);
+            --primary: #2563eb;
+            --secondary: #64748b;
+            --danger: #ef4444;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --gray-50: #f8fafc;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-300: #cbd5e1;
+            --gray-700: #334155;
+            --gray-800: #1e293b;
+            --gray-900: #0f172a;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
 
         body {
-            background: var(--bg-main);
+            background-color: var(--gray-50);
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
         .navbar {
-            background: var(--bg-card);
+            background: white;
             padding: 1rem 2rem;
+            box-shadow: var(--shadow-sm);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         .logo {
@@ -45,414 +55,344 @@
             gap: 0.75rem;
             font-weight: 600;
             font-size: 1.25rem;
-            color: var(--text-primary);
+            color: var(--gray-900);
         }
 
-        .nav-menu {
+        .main-menu {
             display: flex;
-            align-items: center;
             gap: 2rem;
+            align-items: center;
         }
 
-        .nav-item {
-            color: var(--text-secondary);
+        .menu-item {
             text-decoration: none;
-            font-size: 0.9rem;
+            color: var(--gray-700);
+            font-size: 0.875rem;
             transition: color 0.2s;
         }
 
-        .nav-item:hover {
-            color: var(--text-primary);
+        .menu-item:hover {
+            color: var(--primary);
         }
 
-        .nav-item.active {
-            color: var(--text-primary);
-            font-weight: 500;
-        }
-
-        .user-actions {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .main-content {
-            padding: 2rem;
-            max-width: 1600px;
-            margin: 0 auto;
-        }
-
-        .page-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-        }
-
-        .journey-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .team-row {
-            display: flex;
-            align-items: center;
-            margin-bottom: 2rem;
-            gap: -0.5rem;
-        }
-
-        .team-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border: 2px solid white;
-            background: var(--bg-card);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            margin-right: -0.5rem;
-        }
-
-        .team-avatar img {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
-        .workflow-container {
+        .stats-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
             gap: 1.5rem;
-            margin-bottom: 2rem;
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
         }
 
-        .workflow-column {
-            background: var(--bg-card);
-            border-radius: 16px;
+        .stat-card {
+            background: white;
+            border-radius: 0.75rem;
             padding: 1.5rem;
             box-shadow: var(--shadow-sm);
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
         }
 
-        .column-header {
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .stat-header {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .column-title {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
-        .task-card {
-            background: var(--bg-main);
-            border-radius: 12px;
-            padding: 1rem;
+            justify-content: space-between;
             margin-bottom: 1rem;
+        }
+
+        .stat-title {
+            color: var(--gray-700);
+            font-size: 0.875rem;
+        }
+
+        .stat-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            background: var(--gray-100);
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-trend {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .trend-up {
+            color: var(--success);
+        }
+
+        .trend-down {
+            color: var(--danger);
+        }
+
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            padding: 0 2rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .action-card {
+            background: white;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
             display: flex;
             flex-direction: column;
-            gap: 0.75rem;
+            gap: 1rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
         }
 
-        .task-user {
+        .action-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .action-icon {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 0.75rem;
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            justify-content: center;
+            background: var(--gray-100);
+            color: var(--primary);
         }
 
-        .user-avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
+        .action-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--gray-900);
         }
 
-        .task-title {
+        .action-description {
+            color: var(--gray-700);
             font-size: 0.875rem;
-            color: var(--text-primary);
+            line-height: 1.5;
         }
 
-        .task-actions {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .action-buttons {
+        .quick-actions {
             display: flex;
             gap: 0.5rem;
         }
 
-        .action-btn {
-            width: 28px;
-            height: 28px;
-            border-radius: 6px;
-            border: 1px solid var(--border-color);
-            background: var(--bg-card);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
             cursor: pointer;
             transition: all 0.2s;
+            border: none;
         }
 
-        .action-btn:hover {
-            border-color: var(--accent-blue);
-            color: var(--accent-blue);
+        .btn-primary {
+            background: var(--primary);
+            color: white;
         }
 
-        .journey-metrics {
-            background: var(--bg-card);
-            border-radius: 16px;
-            padding: 1.5rem;
-            margin-top: 2rem;
+        .btn-primary:hover {
+            background: #1d4ed8;
         }
 
-        .metrics-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
+        .btn-secondary {
+            background: var(--gray-100);
+            color: var(--gray-700);
         }
 
-        .metrics-title {
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
-        .metrics-content {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        .chart-container {
-            width: 120px;
-            height: 120px;
-            position: relative;
-        }
-
-        .metrics-stats {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-        }
-
-        .stat-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-        }
-
-        .icon-btn {
-            width: 36px;
-            height: 36px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .icon-btn:hover {
-            background: var(--bg-main);
-        }
-
-        .sidebar {
-            position: fixed;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 64px;
-            background: var(--bg-card);
-            border-right: 1px solid var(--border-color);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 1rem 0;
-            gap: 0.5rem;
-        }
-
-        .main-container {
-            margin-left: 64px;
-        }
-
-        @media (max-width: 1200px) {
-            .workflow-container {
-                grid-template-columns: repeat(2, 1fr);
-            }
+        .btn-secondary:hover {
+            background: var(--gray-200);
         }
 
         @media (max-width: 768px) {
-            .workflow-container {
+            .navbar {
+                padding: 1rem;
+            }
+
+            .main-menu {
+                display: none;
+            }
+
+            .stats-grid,
+            .actions-grid {
+                padding: 1rem;
                 grid-template-columns: 1fr;
-            }
-            
-            .nav-menu {
-                display: none;
-            }
-            
-            .main-container {
-                margin-left: 0;
-            }
-            
-            .sidebar {
-                display: none;
             }
         }
     </style>
 </head>
 <body>
-    <div class="sidebar">
-        <div class="icon-btn">
-            <span class="material-icons">schedule</span>
-        </div>
-        <div class="icon-btn">
-            <span class="material-icons">folder</span>
-        </div>
-        <div class="icon-btn">
-            <span class="material-icons">star</span>
-        </div>
-        <div class="icon-btn">
-            <span class="material-icons">description</span>
-        </div>
-        <div class="icon-btn">
+    <nav class="navbar">
+        <div class="logo">
             <span class="material-icons">analytics</span>
+            SimpleCRM
+        </div>
+        <div class="main-menu">
+            <a href="#" class="menu-item">Dashboard</a>
+            <a href="#" class="menu-item">Clienti</a>
+            <a href="#" class="menu-item">Vendite</a>
+            <a href="#" class="menu-item">Attività</a>
+            <a href="#" class="menu-item">Report</a>
+            <button class="btn btn-primary">Nuovo Cliente</button>
+        </div>
+    </nav>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-header">
+                <span class="stat-title">Totale Clienti</span>
+                <div class="stat-icon">
+                    <span class="material-icons">group</span>
+                </div>
+            </div>
+            <div class="stat-value">1,234</div>
+            <div class="stat-trend trend-up">
+                <span class="material-icons">trending_up</span>
+                <span>12.5% vs mese scorso</span>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-header">
+                <span class="stat-title">Fatturato Mensile</span>
+                <div class="stat-icon">
+                    <span class="material-icons">payments</span>
+                </div>
+            </div>
+            <div class="stat-value">€48,500</div>
+            <div class="stat-trend trend-up">
+                <span class="material-icons">trending_up</span>
+                <span>8.2% vs mese scorso</span>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-header">
+                <span class="stat-title">Lead Attivi</span>
+                <div class="stat-icon">
+                    <span class="material-icons">rocket_launch</span>
+                </div>
+            </div>
+            <div class="stat-value">45</div>
+            <div class="stat-trend trend-down">
+                <span class="material-icons">trending_down</span>
+                <span>3.1% vs mese scorso</span>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-header">
+                <span class="stat-title">Tasso Conversione</span>
+                <div class="stat-icon">
+                    <span class="material-icons">auto_graph</span>
+                </div>
+            </div>
+            <div class="stat-value">24.8%</div>
+            <div class="stat-trend trend-up">
+                <span class="material-icons">trending_up</span>
+                <span>2.4% vs mese scorso</span>
+            </div>
         </div>
     </div>
 
-    <div class="main-container">
-        <nav class="navbar">
-            <div class="logo">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <rect x="3" y="3" width="18" height="18" rx="2"/>
-                    <path d="M3 9h18"/>
-                </svg>
-                sugarcrm
+    <div class="actions-grid">
+        <div class="action-card">
+            <div class="action-icon">
+                <span class="material-icons">people</span>
             </div>
-            <div class="nav-menu">
-                <a href="#" class="nav-item">Relationship</a>
-                <a href="#" class="nav-item">Opportunities</a>
-                <a href="#" class="nav-item">Leads</a>
-                <a href="#" class="nav-item">Calendar</a>
-                <a href="#" class="nav-item active">Cases</a>
-                <a href="#" class="nav-item">Reports</a>
-                <a href="#" class="nav-item">Quotes</a>
+            <h3 class="action-title">Gestione Clienti</h3>
+            <p class="action-description">Gestisci l'anagrafica clienti, visualizza lo storico e monitora le relazioni</p>
+            <div class="quick-actions">
+                <button class="btn btn-primary">Nuovo Cliente</button>
+                <button class="btn btn-secondary">Visualizza Tutti</button>
             </div>
-            <div class="user-actions">
-                <div class="icon-btn">
-                    <span class="material-icons">search</span>
-                </div>
-                <div class="icon-btn">
-                    <span class="material-icons">notifications</span>
-                </div>
-                <img src="/api/placeholder/36/36" alt="User Profile" style="width: 36px; height: 36px; border-radius: 50%;">
+        </div>
+
+        <div class="action-card">
+            <div class="action-icon">
+                <span class="material-icons">shopping_cart</span>
             </div>
-        </nav>
-
-        <main class="main-content">
-            <div class="page-header">
-                <div class="journey-title">
-                    <span class="material-icons">arrow_back</span>
-                    Customer Journeys
-                </div>
-                <div class="icon-btn">
-                    <span class="material-icons">more_vert</span>
-                </div>
+            <h3 class="action-title">Vendite</h3>
+            <p class="action-description">Gestisci ordini, preventivi e monitora le performance di vendita</p>
+            <div class="quick-actions">
+                <button class="btn btn-primary">Nuovo Ordine</button>
+                <button class="btn btn-secondary">Report Vendite</button>
             </div>
+        </div>
 
-            <div class="team-row">
-                <div class="team-avatar"><img src="/api/placeholder/40/40" alt="Team member 1"></div>
-                <div class="team-avatar"><img src="/api/placeholder/40/40" alt="Team member 2"></div>
-                <div class="team-avatar"><img src="/api/placeholder/40/40" alt="Team member 3"></div>
-                <div class="team-avatar"><img src="/api/placeholder/40/40" alt="Team member 4"></div>
-                <div class="team-avatar"><img src="/api/placeholder/40/40" alt="Team member 5"></div>
-                <div class="team-avatar">+</div>
+        <div class="action-card">
+            <div class="action-icon">
+                <span class="material-icons">assignment</span>
             </div>
+            <h3 class="action-title">Attività</h3>
+            <p class="action-description">Pianifica appuntamenti, gestisci task e follow-up clienti</p>
+            <div class="quick-actions">
+                <button class="btn btn-primary">Nuova Attività</button>
+                <button class="btn btn-secondary">Calendario</button>
+            </div>
+        </div>
 
-            <div class="workflow-container">
-                <!-- Case Allocation Column -->
-                <div class="workflow-column">
-                    <div class="column-header">
-                        <span class="column-title">Case Allocation</span>
-                        <div class="icon-btn">
-                            <span class="material-icons">more_vert</span>
-                        </div>
-                    </div>
-                    <div class="task-card">
-                        <div class="task-user">
-                            <img src="/api/placeholder/32/32" alt="User" class="user-avatar">
-                            <span class="task-title">Allocate Case to User</span>
-                        </div>
-                        <div class="task-actions">
-                            <div class="action-buttons">
-                                <button class="action-btn">
-                                    <span class="material-icons" style="font-size: 18px;">check</span>
-                                </button>
-                                <button class="action-btn">
-                                    <span class="material-icons" style="font-size: 18px;">calendar_today</span>
-                                </button>
-                            </div>
-                            <span class="material-icons">more_horiz</span>
-                        </div>
-                    </div>
-                </div>
+        <div class="action-card">
+            <div class="action-icon">
+                <span class="material-icons">insights</span>
+            </div>
+            <h3 class="action-title">Report & Analytics</h3>
+            <p class="action-description">Analizza dati, crea report personalizzati e monitora KPI</p>
+            <div class="quick-actions">
+                <button class="btn btn-primary">Nuovo Report</button>
+                <button class="btn btn-secondary">Dashboard</button>
+            </div>
+        </div>
+    </div>
 
-                <!-- Issue Identification Column -->
-                <div class="workflow-column">
-                    <div class="column-header">
-                        <span class="column-title">Issue Identification</span>
-                        <div class="icon-btn">
-                            <span class="material-icons">more_vert</span>
-                        </div>
-                    </div>
-                    <div class="task-card">
-                        <div class="task-user">
-                            <img src="/api/placeholder/32/32" alt="User" class="user-avatar">
-                            <span class="task-title">Identify Issue Category</span>
-                        </div>
-                        <div class="task-actions">
-                            <div class="action-buttons">
-                                <button class="action-btn">
-                                    <span class="material-icons" style="font-size: 18px;">check</span>
-                                </button>
-                                <button class="action-btn">
-                                    <span class="material-icons" style="font-size: 18px;">calendar_today</span>
-                                </button>
-                            </div>
-                            <span class="material-icons">more_horiz</span>
-                        </div>
-                    </div>
-                </div>
+    <script>
+        // Aggiunge animazioni alle card al caricamento
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.stat-card, .action-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    card.style.transition = 'all 0.5s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
 
-                <!-- Technical Resolution Column -->
-                <div class="workflow-column">
-                    <div class="column-header">
-                        <span class="column-title">Technical Resolution</span>
-                        <div class="icon-btn">
-                            <span class="material-icons">more_vert</span>
-                        </div>
-                    </div>
-                    <div class="task-card">
-                        <div class="task-user">
-                            <img src="/api/placeholder/32/32" alt="User" class="user-avatar">
-                            <span class="task-title">Resolution Steps</span>
-                        </div>
-                        <div class="task-actions">
-                            <div class="action-buttons">
-                                <button class="action-btn">
-                                    <span class="material-icons" style="font-size: 18px;">check</span>
-                                </button>
-                                <button class="action-btn">
-                                    <span class="material-icons" style="font-size: 18px;">calendar_today</span>
+        // Aggiunge interattività ai bottoni
+        const buttons = document.querySelectorAll('.btn');
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                button.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    button.style.transform = 'scale(1)';
+                }, 100);
+            });
+        });
+    </script>
+</body>
+</html>
